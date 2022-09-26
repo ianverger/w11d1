@@ -3,6 +3,14 @@ import { useState } from 'react';
 // import Dropdown from 'react-bootstrap/Dropdown';
 
 const Form = () => {
+
+    function validate(values) {
+        const errors ={};
+
+        if ()
+    }
+
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -14,6 +22,8 @@ const Form = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+
         console.log(email);
         console.log(staff);
         console.log(bio);
