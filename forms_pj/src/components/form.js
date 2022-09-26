@@ -13,11 +13,16 @@ const Form = () => {
     const [validationErrors, setValidationErrors] = useState([]);
     const [hasSubmitted, setHasSubmitted] = useState(false);
 
+    const isValidEmail = (email) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+
+
     useEffect(() => {
         const errors = [];
         if (!name.length) errors.push("Please enter Your Name"); 
+        if (!email.length || !isValidEmail(email)) errors.push("email incorrectly formatted")
         setValidationErrors(errors)
-    }, [name])
+    }, [name, email])
+
 
     //useEffect(callback, [dependencyArray])
 
