@@ -1,16 +1,8 @@
 import react from "react"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import Dropdown from 'react-bootstrap/Dropdown';
 
 const Form = () => {
-
-    function validate(values) {
-        const errors ={};
-
-        if ()
-    }
-
-
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -18,19 +10,42 @@ const Form = () => {
     const [staff, setStaff] = useState('');
     const [bio, setBio] = useState('');
     const [signup, setSignup] = useState(false);
+    const [validationErrors, setValidationErrors] = useState([]);
+    const [hasSubmitted, setHasSubmitted] = useState(false);
 
+    useEffect(() => {
+        const errors = [];
+        if (!name.length) errors.push("Please enter Your Name"); 
+        setValidationErrors(errors)
+    }, [name])
+
+    //useEffect(callback, [dependencyArray])
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        
+        setHasSubmitted(true);
+        if (validationErrors.length) return;
 
-
+        console.log(name);
         console.log(email);
         console.log(staff);
         console.log(bio);
         console.log(signup);
+        setHasSubmitted(false);
     };
 
     return (
+    <>
+    {hasSubmitted && validationErrors.length > 0 && (
+        <div>
+            <ul>
+                {validationErrors.map(error => (
+                    <li key={error}>{error}</li>
+                ))}
+            </ul>
+        </div>
+    )}
     <form onSubmit={handleSubmit}>
         <label htmlFor="name">name</label>
         <input 
@@ -96,6 +111,7 @@ const Form = () => {
 
     <input type={'submit'} value="submit"/>
     </form>
+    </>
     )
 };
 
