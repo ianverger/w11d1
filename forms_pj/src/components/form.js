@@ -14,14 +14,18 @@ const Form = () => {
     const [hasSubmitted, setHasSubmitted] = useState(false);
 
     const isValidEmail = (email) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+    const isValidPhone = (phone) => /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im.test(phone);
 
 
     useEffect(() => {
         const errors = [];
         if (!name.length) errors.push("Please enter Your Name"); 
-        if (!email.length || !isValidEmail(email)) errors.push("email incorrectly formatted")
+        if (!email.length || !isValidEmail(email)) errors.push("email incorrectly formatted");
+        if (!isValidPhone(phone)) errors.push("phone number incorrectly formatted");
+        if (bio.length > 280) errors.push("Bio character limit is 280") 
         setValidationErrors(errors)
-    }, [name, email])
+
+    }, [name, email, phone, bio])
 
 
     //useEffect(callback, [dependencyArray])
@@ -37,20 +41,15 @@ const Form = () => {
         console.log(staff);
         console.log(bio);
         console.log(signup);
+        console.log(phone);
+        console.log(bio);
+        console.log(new Date);
         setHasSubmitted(false);
     };
 
     return (
     <>
-    {hasSubmitted && validationErrors.length > 0 && (
-        <div>
-            <ul>
-                {validationErrors.map(error => (
-                    <li key={error}>{error}</li>
-                ))}
-            </ul>
-        </div>
-    )}
+   
     <form onSubmit={handleSubmit}>
         <label htmlFor="name">name</label>
         <input 
@@ -116,6 +115,16 @@ const Form = () => {
 
     <input type={'submit'} value="submit"/>
     </form>
+
+    {hasSubmitted && validationErrors.length > 0 && (
+        <div>
+            <ul>
+                {validationErrors.map(error => (
+                    <li key={error}>{error}</li>
+                ))}
+            </ul>
+        </div>
+    )}
     </>
     )
 };
